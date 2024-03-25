@@ -166,6 +166,36 @@ On note pour $K\in [0,N], p_K$ le prix de vente optimal d'une barre de longueur 
 
 
 
+<u>Preuve</u>
+
+$Prices[k]$ : prix d'une barre de longueur k
+
+$p_0 = 0$
+
+$p_K = max_{l\in[1,K]}(Prices[l]+p_{K-l})$
+
+On montre par récurrence sur K que p_K est le prix de vente maximal d'une barre de longueur K.
+
+**Initialisation** : Trivial
+
+**Hérédité** : Soit $K>0$ tel que l'hypothèse de récurrence HR soit vrai pour tout i
+
+Soit $l\in[1,K]$, par HR $p_{K-l}$ est le prix de vente optimal d'une barre de longueur K-l, donc il existe un découpage $K-l = n_0 + ...+n_P$ tel que $\sum_{i=0}^{p}{Prices[n_i]} = p_{K-l}$.
+
+Alors clairement le découpage $K = l + n_0+...+n_P$ réalise le prix de vente $Prices[l]+p_{K-l}$. Donc $p_K \le prix_{opti}$ pour K.
+
+Réciproquement, soit $K=n_0+...+n_P$ <u>un</u> découpage optimal pour une barre de longueur K (existe car possibilités finies).
+
+Alors le découpage $K-n_0 = n_1+...n_P$ est optimal. Si ce n'était pas le cas, en prenant un meilleur découpage $K-n_0 = n_1'+...+n_P'$ on obtient un meilleur découpage pour K.
+
+Donc $\sum_{i=1}^{P}{Prices[n_i]}=p_K-n_0$.
+
+Donc $prix_{opti}=Prices[n_0]+p_K-n_0 \le p_K$.
+
+**Mot-clé** : <u>Propriété de sous-problème optimal</u> = une solution qui se construit en combinant des solutions optimales pour des sous-problèmes.
+
+
+
 ## IV - Seconde étape
 
 #### 1. Version Descendante
@@ -182,7 +212,7 @@ open Hastbl;;
 let price_opti prices n =
     (* 1. Création de la table *)
     let t = create () in
-    
+
     (* 2. Cas de base *)
     add t 0 0;
 
@@ -196,7 +226,7 @@ let price_opti prices n =
             p
         | Some p -> p
     in
-    
+
     (* 4. On retourne la valeur souhaitée *)
     aux n;;
 
@@ -216,8 +246,6 @@ let s = ref e in
 for i = 0 to Array.length a - 1 do
     s := s f a[i];;
 ```
-
-
 
 <u>Squelette Générique</u>
 
@@ -249,8 +277,6 @@ def version_desc(arg):
 
 * Possibilité de traiter tous les cas de base dans la fonction aux.
 
-
-
 #### 2. Version Ascendante = Impérative
 
 Au lieu de vérifier si un calcul a déjà été mené (/sous-problème déjà résolu), on remplit toute la table <u>dans le bon ordre</u>  <u>systématiquement</u>.
@@ -276,8 +302,6 @@ let barre_de_fer prices n =
 > <u>desc</u> : $p_k \rarr aux \space k$
 > 
 > <u>asc</u> : $p_k \rarr t.(k)$
-
-
 
 <u>Squelette Générique</u>
 
@@ -305,11 +329,31 @@ let version_asc arg =
 
 * Trouver le bon ordre : $t.(k).(l)$ doit avoir déjà été remplit lorsqu'il est utilisé.
 
+<u>Version ascendante</u>
 
+```ocaml
+let knapsack obj poids_max =
+    let n = Array.length obj in
 
-**TODO : sac à dos version ascendante**
+    (* Création de la table *)
+    let t = Hashtbl.create () in
 
+    (* Cas de base *)
+    for i = 0 to n do
+        for p = 0 to poids_max do
+            Hashtbl.add t (i,p) 0
+        done;
+    done;
 
+    let rec aux i p = match Hashtbl.find_opt t (i,p) with
+        | None ->
+            let res =
+                max (Hashtbl.find t (i-1,p))
+                    (snd obj.(i-1) + (Hashtbl.find (i-1) (p-(fst obj.(i-1)))));
+            in Hashtbl.add t res;
+            res;
+        | Some v -> v
+```
 
 ## V - Optimisations Mémoires
 
@@ -334,8 +378,6 @@ def fibo(n):
 ```
 
 Ici on remplit le dictionnaire à la demande, on ne remplit que ce dont on a besoin.
-
-
 
 <u>Version ascendante</u>
 
@@ -366,11 +408,7 @@ On a ainsi l'invariant suivant : $u=fibo(i-1)$ et $uprec = fibo(i-2)$.
 
 On a ainsi un coût d'espace constant bien que l'on reste on coût temporel linéaire.
 
-
-
 $\Longrightarrow$ La version ascendante peut permettre de gagner en espace.
-
-
 
 #### 2. Sac à dos
 
@@ -402,8 +440,6 @@ $\Longrightarrow$ gain en temps (difficile à mesurer dans le pire des cas)
 
 $\Longrightarrow$ gain en espace ?? $\rarr$ Cela dépend de l'implémentation des dictionnaires, ce n'est pas si évident.
 
-
-
 ## VI - Reconstruction de la Solution
 
 Les programmes écrits pour le problème du sac à dos donnent la valeur optimale du sac à dos mais pas comment l'atteindre. 
@@ -418,4 +454,98 @@ Pour reconstruire la solution on conserve la table et on la parcourt "à l'enver
 
 
 
+## VII - TD
 
+#### 1. Optimisation mémoire
+
+$$
+\binom{n+1}{k+1}=\binom{n}{k}+\binom{n}{k+1}
+$$
+
+<u>Version ascendante triangle de Pascal</u>
+
+```ocaml
+let pascal k n =
+    let t = Hashtbl.create 1 in
+    
+    let rec aux k n =
+        if k > n || n < 0 then 0
+        if k = 0 then 1
+        if k = 1 then n
+        match Hashtbl.find_opt t (k,n) with
+        | Some v -> v
+        | None -> begin
+            let res = (aux (n-1) (k-1)) + (aux (n-1) k) in
+            Hashtbl.add t (k,n) res;
+            res
+        end;
+    in aux k n;;
+```
+
+<u>Version ascendante</u>
+
+Un transforme notre parallélogramme en rectangle :
+
+$m{i,j}=m_{i(j-1)}+m_{(i-1),j}
+$
+
+$m_{0,j}=m_{i,0}=1$
+
+```ocaml
+let pascal k n =
+    let t = Array.make_matrix (k+1) (n-k) 0 in
+    for i = 0 to n do
+        t.(0).(i) <- 1
+```
+
+On peut ainsi se ramener à un problème plus classique que nous savons déjà implémenter.
+
+
+
+<u>Amélioration de la version ascendante pour être en O(k)</u>
+
+On applique l'algorithme sur un tableau de taille k.
+
+```ocaml
+let pascal k n =
+    let t = Array.make (k+1) 1 in
+    (* Cas de base déjà fait *)
+
+    for i = 0 to n-1 do (* Lignes *)
+        (* Invariant: t.(j) = j parmi i pour j dans [0,i] *)
+        for j = min k (i-1) downto 1 do
+            t.(j) <- t.(j) + t.(j-1)
+        done;
+    done;
+    t.(k);;
+```
+
+<u>Pour le sac à dos</u>
+
+La même astuce permet d'obtenir un coût linéaire de mémoire.
+
+
+
+#### 2. Trouver et Prouver des Formules de Récurrences
+
+##### 2.1 Vente de Barres de Fer
+
+Preuve dans la partie **III** de cours.
+
+##### 2.2 Distance d'édition : Levenshtein
+
+<u>Formule de récurrence</u>
+
+$d_{i,0} = i$
+
+$d_{0,j} = j$
+
+$d_{i,j} = d_{i-1,j-1}$ si $t1[i-1]=t2[j-1]$
+
+$d_{i,j} = min(d_{i-1,j}+1, 1+d_{i,j-1}) = 1+min(d_{i-1,j},d_{i,j-1})$ sinon
+
+Le minimum fait intervenir d'un côté la suppression du caractère suivi de l'application de l'algorithme avec le reste du mot. De l'autre côté il fait intervenir l'ajout du caractère avant de continuer.
+
+<u>Avec remplacement</u>
+
+$d_{i,j} = 1+min(d_{i-1,j},d_{i,j-1},d_{i-1,j-1})$
