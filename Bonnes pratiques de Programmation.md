@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Les bonnes pratiques (ou règles de codage) sont un ensemble de règles visant à <u>uniformiser</u> les pratiques de développement afin que "tout le monde s'entende bien". Le but est que le code soit **facile à lire** pour soi-même et pour les autres, que sa **logique soi évidente**, qu'il soit **explicite** et **soigné**. Il doit également être maintenable dans le temps bien que cela ne nous concerne pas encore, de même pour la portabilité.
+Les bonnes pratiques (ou règles de codage) sont un ensemble de règles visant à <ins>uniformiser</ins> les pratiques de développement afin que "tout le monde s'entende bien". Le but est que le code soit **facile à lire** pour soi-même et pour les autres, que sa **logique soi évidente**, qu'il soit **explicite** et **soigné**. Il doit également être maintenable dans le temps bien que cela ne nous concerne pas encore, de même pour la portabilité.
 
 Il existe de nombreuses règles réparties en plusieurs thèmes :
 
@@ -22,7 +22,7 @@ Par exemple, du code redondant, 200 caractères sur une même ligne ou bien des 
 
 > Remarque : Certaines de ces règles dépenderont également du langage, documenter son code est assez universel mais les convention de nommage sont souvent différentes, de même pour l'organisation des fichiers. Nous ferons donc (si nécessaire) la distinction entre OCaml et C.
 
-<u>Liens utiles</u>
+<ins>Liens utiles</ins>
 
 * Pour le C : [GNU Coding Standards](https://www.gnu.org/prep/standards/)
 
@@ -70,7 +70,7 @@ Enfin, lorsqu'une fonction anonyme (`fun x -> foo...`) est trop grande nommez-l�
 
 Le formattage du code est la structure visuelle que vous lui donnez, c'est l'équivalent de la présentation d'une copie, si elle est sale personne ne voudra (ou ne pourra) la lire.
 
-<u>Indentation (très important)</u>
+<ins>Indentation (très important)</ins>
 
 L'indentation permet d'identifier très rapidement les blocs de code, il est indispensable de la respecter.
 
@@ -124,7 +124,7 @@ let f = function
   | _ -> 3..
 ```
 
-<u>Utilisation des opérateurs</u>
+<ins>Utilisation des opérateurs</ins>
 
 Il est plus lisible de séparer ses opérateurs par des espaces. Vous pouvez également vous servir de parenthèses.
 
@@ -143,7 +143,7 @@ x * y + z
 
 > On remarque bien ici la subjectivité, les parenthèses sont inutiles et nous aurions raison de ne pas les mettre, mais ce n'est pas interdit. Quand on peut contribuer à une meilleure lisibilité on a tout à fait le droit.
 
-<u>Placement des accolades & déclaration d'une fonction</u>
+<ins>Placement des accolades & déclaration d'une fonction</ins>
 
 En C, lors de la déclaration d'une fonction, on place les accolades sur la première colonne, c'est-à-dire qu'on revient à la ligne. C'est surtout utile pour certains outils de recherche. Dans une fonction il ne faudra pas le faire pour autre chose (`while`, `for`, `if`...) car cela perturberait ces outils. Cependant cela reste autorisé pour les `struct` et les `enums` (qui peuvent rester en une ligne s'ils tiennent).
 
@@ -186,7 +186,7 @@ if (i == 42) {
 }
 ```
 
-<u>Taille du code</u>
+<ins>Taille du code</ins>
 
 Il existe une limite de caractères recommandée en largeur, c'est de là que vient cette ligne verticale dans vos environnements. En C un maximum de 79 caractères est recommandé pour 80 en OCaml. L'objectif est que le code soit visible sur n'importe quel environnement. Il est également recommandé de faire tenir vos fonctions sur un écran si possible, plus si vous n'avez vraiment pas le choix.
 
@@ -218,7 +218,7 @@ Dans certains cas, respecter la limite horizontale peut sembler impossible mais 
 
 Tout comme on peut trouver des atrocités en langue, on peut trouver des crimes de guerre en programmation. On cite dans cette partie les plus courants.
 
-<u>Les if & else inutiles</u>
+<ins>Les if & else inutiles</ins>
 
 Lorsque vous manipulez des valeurs booléennes avec des opérateurs, il ne faut pas oublier que vous manipulez des valeurs booléennes avec des opérateurs... A ce titre, vous savez que vous pouvez utiliser cette valeur sans passer par des conditions.
 
@@ -249,7 +249,7 @@ g (int x, int y)
 
 > Remarque : Cette mauvaise pratique est présente partout puisqu'elle ne dépend pas du langage. Elle ne vous fera pas voir.
 
-<u>Affectation dans les conditions</u>
+<ins>Affectation dans les conditions</ins>
 
 Que ce soit par erreur ou par curiosité (en espérant pas par besoin), vous savez peut-être déjà que dans certains langages on peut affecter une variable dans une condition puisque l'affectation a une valeur de retour.
 
@@ -275,7 +275,7 @@ En effet, l'affectation renvoie la valeur affectée, puisqu'elle est différente
 
 Il s'agit là plus d'une erreur que d'une mauvaise pratique mais dans la situation où cela vous paraîtrait malin de la faire sachez que ce sera incompréhensible.
 
-<u>Ignorer les warnings</u>
+<ins>Ignorer les warnings</ins>
 
 Les warnings ne sont pas là pour rien, c'est écrit dessus. Préférez les résoudre plutôt que de les bypass. De plus, un programme rempli de warnings dégage un parfum "d'amateur".
 
@@ -305,7 +305,7 @@ List.iter f l;
 print_newline ()
 ```
 
-<u>Gestion des importations</u>
+<ins>Gestion des importations</ins>
 
 Utiliser les fonctions importés depuis `module` en écrivant `module.fonction` est certes précis mais long. Il est donc possible d'ouvrir les modules mais il faut faire attention aux collisions.
 
