@@ -249,6 +249,12 @@ g (int x, int y)
 
 > Remarque : Cette mauvaise pratique est présente partout puisqu'elle ne dépend pas du langage. Elle ne vous fera pas voir.
 
+<ins>Programmer dans les fichiers d'en-tête</ins>  
+Puisque les extensions ne sont que des conventions pour nous, l'ordinateur accepte que l'on exécute n'importe quel fichier. Vous pourriez prendre votre cours dans un fichier `.png` mais vous ne le faites pas bien sûr.
+De la même manière vous ne devez pas coder d'instruction dans les fichiers d'en-tête, ils sont réservés aux déclarations (variables, prototypes de fonctions etc...).
+Cela est même considéré (par les humains) comme une erreur de le faire !  
+Je vous renvoie au [cours sur la compilation](https://github.com/voXrey/cours-informatique/blob/main/compilation.md) pour en savoir plus sur les fichiers d'en-tête.
+
 <ins>Affectation dans les conditions</ins>
 
 Que ce soit par erreur ou par curiosité (en espérant pas par besoin), vous savez peut-être déjà que dans certains langages on peut affecter une variable dans une condition puisque l'affectation a une valeur de retour.
