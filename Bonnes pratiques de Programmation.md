@@ -4,6 +4,8 @@
 
 Les bonnes pratiques (ou règles de codage) sont un ensemble de règles visant à <ins>uniformiser</ins> les pratiques de développement afin que "tout le monde s'entende bien". Le but est que le code soit **facile à lire** pour soi-même et pour les autres, que sa **logique soi évidente**, qu'il soit **explicite** et **soigné**. Il doit également être maintenable dans le temps bien que cela ne nous concerne pas encore, de même pour la portabilité.
 
+> Remarque : Les "bonnes pratiques" restent tout de même subjectives puisque la lisibilité est subjective. Presque tout ce qui se trouve dans ce document provient des sources citées, mais faire autrement n'est pas toujours un problème !
+
 Il existe de nombreuses règles réparties en plusieurs thèmes :
 
 1. L'organisation des fichiers
