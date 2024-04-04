@@ -21,8 +21,6 @@ E = {
 
 <u>Matrice d'adjacence</u>
 
-
-
 |       | 0   | 1   | 2   | 3   | 4   | 5   | 6   |
 |:-----:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | **0** |     |     |     |     | 1   |     |     |
@@ -37,8 +35,6 @@ E = {
 // Le type serait int array array, en C ce serait :
 (int n, int** g)
 ```
-
-
 
 <u>Liste d'adjacence</u>
 
@@ -69,8 +65,6 @@ Pour l'implémenter en Caml pas de souci, pour le C il y a plusieurs façons de 
 
 La taille de la liste est $log(n)m$
 
-
-
 <u>Dictionnaire d'adjacence</u>
 
 Si $V \neq [0,n-1]$
@@ -79,8 +73,6 @@ $g[i] \rightarrow$ liste des voisins de i
 
 $g["Paris"] = ["Lille", "Nantes",...]$
 
-
-
 # Caractérisation des parcours
 
 #### Largeur
@@ -88,8 +80,6 @@ $g["Paris"] = ["Lille", "Nantes",...]$
 Un parcours en largeur visite les sommets par distance croissante à la source, c'est-à-dire que tous les sommets à distance d de u0 seront vus <u>avant</u> tous ceux à distance d+1.
 
 #### Profondeur
-
-
 
 # Parcours de graphes
 
@@ -102,7 +92,7 @@ On travaille en liste d'adjacence
 def dfs(G:Graph):
     n = len(G)
     visited = [False]*n # Petits cailloux
-    
+
     def visite(u:Sommet):
         if not visited[u]: # Si pas caillou
             visited[u] = True # On met caillou
@@ -122,8 +112,6 @@ def dfs(G:Graph):
 
 2. Pour parcourir toutes les composantes connexes on appel visite sur tous les sommets et non pas juste sur un seul.
 
-
-
 <u>En impératif</u>
 
 Le début est celui du parcours en largeur (voir la suite) puis on remplace les files par des piles.
@@ -133,7 +121,7 @@ Le début est celui du parcours en largeur (voir la suite) puis on remplace les 
     visited = [False]*n
     # on supprime cette ligne
     # visited[u0] = True
-    
+
     while !is_empty(Q):
         u = Q.pop()
         if not visited[u]:
@@ -146,8 +134,6 @@ Le début est celui du parcours en largeur (voir la suite) puis on remplace les 
 Cependant certains éléments apparaîtrons plusieurs fois, c'est inévitable.
 
 Complexité en $O(n+m)$ quand même.
-
- 
 
 ### Parcours en largeur
 
@@ -178,7 +164,3 @@ def bfs(G:Graph):
 <u>Remarque</u> : Chaque sommet de la composante connexe de u0 passe exactement une fois dans la file. Cependant ce n'est pas toujours le cas !
 
 $\Longrightarrow$ On a une complexité en 0(n+m) car la boucle while est itérée exactement n fois (si le graphe est connexe). Par conséquent, la complexité est $\sum_{u\in V}{1+d_+(u)=O(n+m)}$
-
-
-
-
