@@ -58,37 +58,53 @@ def dijsktra(G, s):
 > 
 > Preuve : S'il y avait un meilleur <u>chemin</u> de s à $u_i$, alors on obtiendrait un meilleur chemin de s à t.
 
-<u>Invariant de boucle</u>
 
-* $\forall u\in V$, si priorité de u différente de +infini, alors il existe un chemin de s à u de poids priorité de u. En particulier priorité de u supérieure à $\delta(s,v)$.
 
-* $\forall u \in V$, la priorité de u au moment où il sort de la file est exactement $\delta (s,u)$.
+<u>Invariant</u>
 
-<u>Avant la boucle</u>
+* Si prio(u) différent de $+\infin$ alors $\exist c : s\rightarrow u$ de poids prio(u)
 
-* évident : $+\infin \ge \delta(s,u)$
+* Si $x \notin pq$ alors pour tout voisin w de x on a prio(u) $\le$ prio(x) + pond(x, w)
 
-* Tous les sommets sont dans la file
+* Lorsque u sort de la file, prio(u) = $\delta(s,u)$
 
-<u>Invariant préservé</u>
 
-* La seule priorité éventuellement modifiée dans la boucle est celle de v. Si elle est modifiée, on a priorité(u) + ... < priorité(v) donc priorité(u) différente de $+\infin$.
-  
-  Par invariant, il existe un chemin $c:s \rightarrow u$ de poids priorité(u). On complète ce chemin par l'arrête $(u,v)\in E$ et on obtient bien un chemin de poids priorité(u) + pond(u,v).
 
-* Dans la boucle `while`, le seul élément qui sort de la file est u, il faut justifier que priorité(u) = $\delta(s,u)$.
-  
-  Si u = s c'est évident.
-  
-  Sinon on peut considérer c un chemin de poids optimal de s à u, et on note w le dernier sommet de ce chemin qui n'est plus dans la file (existe car s n'est plus dans la file).
-  
-  Le chemin c donne un chemin $c_1:s\rightarrow w$ et qui est donc optimal par le lemme.
-  
-  Donc le poids de $c_1 = \delta(s,w) = priorité(w)$ par invariant.
-  
-  On note x le prédécesseur de u dans le chemin $c_1$ et $c_2$ le chemin de w à x obtenu depuis c.
-  
-  On montre que $pond(c_2) =0$  
+<u>Préservation de l'invariant</u>
+
+On suppose u différent de s
+
+On considère c un chemin optimal de s à u.
+
+* Sur ce chemin, on note w le premier du chemin qui est dans la file (existe car u est dans la file)
+
+* Sur ce chemin on note x le prédécesseur de w (existe car s $\notin$ pq donc s différent de w)
+
+$\delta(s,w) \le prio(w)$ par invariant
+
+$x \notin pq$ puisque w est le premier du chemin à être dans pq.
+
+Donc par le 2ème invariant : $prio(w) \le prio(x) + pond(x,w)$ où $prio(x) = \delta(s,w)$.
+
+Par le lemme, le préfixe du chemin c de s à w est optimal, donc de poids $\delta(s,w)$
+
+De même pour x, donc $\delta(s,w) = \delta(s,x)+pond(w,x)$
+
+**On met tout ensemble :**
+
+$\delta(s,w) \le prio(w) \le \delta(s,w)+pond(w,x)$ et $prio(w) = \delta(s,w)$
+
+Et comme $u = extract\_min \space pq$. 
+
+On a $prio(u) \le prio(w) = \delta(s,w) = \delta(s,u) - pond(c_2)$
+
+Donc $\delta(s,u) \le \delta(s,u)-pond(c_2)$
+
+Donc $pond(c_2) = 0$
+
+L'invariant est vérifié.
+
+
 
 #### Complexité
 
