@@ -1,6 +1,6 @@
 # Partie III - Structure de Données
 
-# Chapitre 15 : Fiches de Priorités
+# Chapitre 15 : Files de Priorités
 
 ## I - Tas Binaire
 
@@ -187,8 +187,6 @@ Précondition / Invariant de boucle : L'arbre est un tas sauf éventuellement au
 
 *On note * l'utilisation d'un tableau dynamique*
 
-
-
 ### 2. Implémentation via les tas binaires
 
 <u>Créer une file vide</u> : on crée un tas vide
@@ -208,8 +206,6 @@ Précondition / Invariant de boucle : L'arbre est un tas sauf éventuellement au
 * Si la nouvelle priorité est inférieure à l'ancienne on appelle `percolate_up` $O(log(n))$
   
   Sinon, on appelle `percolate_down` $O(log(n))$
-
-
 
 ### 3. Remarque importante sur l'implémentation
 
@@ -234,5 +230,3 @@ void update_priority (tas, elt, new_prio);
 * dictionnaire dont les clés sont les éléments (la donnée satellite) et dont les valeurs sont les indices du tableau qui implémente le tas où se trouve la priorité de l'élément concerné.
 
 Conséquence : à chaque modification du tableau dans les fonctions de tas binaire il faut mettre à jour le dictionnaire.
-
-

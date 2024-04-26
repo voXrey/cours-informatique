@@ -12,8 +12,6 @@
 
 <u>Solution 2</u> : Analyse mathématique
 
-
-
 # Chapitre 1 : Correction
 
 ## I - Introduction
@@ -45,8 +43,6 @@ Ce programme est-il correct ?
   * soit trié
   
   * soit une permutation du tableau initial
-
-
 
 ## II - Vocabulaire
 
@@ -102,8 +98,6 @@ Le `bogosort` tire aléatoirement des permutations d'une liste (ou tableau) jusq
 > Remarque : On parle ici de **correction partielle**. Cela consiste à démontrer que le programme est correct en supposant qu'il termine (même si cette supposition est fausse.
 
 On dit qu'un programme est **correct** lorsque l'on a **correction partielle** + **terminaison**.
-
-
 
 ## III - Correction de programmes impératifs
 
@@ -172,8 +166,6 @@ Finalement $m=max_{j\in [0,len[}a[j]$
 
 C'est exactement la postcondition.
 
-
-
 ## IV - Correction de programmes Récursifs
 
 ```c
@@ -241,5 +233,3 @@ On montre par récurrence sur `len` que la fonction est correcte c'est-à-dire e
 Donc `sum_arr(len, a)` renvoie $a[len-1]+\sum_{j=0}^{len-1}a[j] = \sum_{j=0}^{len-1}a[j]$.
 
 L'invariant de boucle de la version impérative serait $S = \sum_{j=0}^{i-1}a[j]$
-
-
