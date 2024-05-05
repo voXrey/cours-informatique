@@ -38,5 +38,3 @@ Erreurs de calcul.
 3.1 question 2 à reprendre
 
 Erreurs d'accès à ne plus commettre, utiliser un invariant de boucle permet de vérifier.
-
-

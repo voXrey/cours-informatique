@@ -164,8 +164,6 @@ On note pour $K\in [0,N], p_K$ le prix de vente optimal d'une barre de longueur 
 
 * Pour $K>0,p_K=max_{l\in [1,K]}(Prices[l]+p_{K-l})$  
 
-
-
 <u>Preuve</u>
 
 $Prices[k]$ : prix d'une barre de longueur k
@@ -193,8 +191,6 @@ Donc $\sum_{i=1}^{P}{Prices[n_i]}=p_K-n_0$.
 Donc $prix_{opti}=Prices[n_0]+p_K-n_0 \le p_K$.
 
 **Mot-clé** : <u>Propriété de sous-problème optimal</u> = une solution qui se construit en combinant des solutions optimales pour des sous-problèmes.
-
-
 
 ## IV - Seconde étape
 
@@ -452,8 +448,6 @@ Pour reconstruire la solution on conserve la table et on la parcourt "à l'enver
 > 
 > Puis on continue.
 
-
-
 ## VII - TD
 
 #### 1. Optimisation mémoire
@@ -467,7 +461,7 @@ $$
 ```ocaml
 let pascal k n =
     let t = Hashtbl.create 1 in
-    
+
     let rec aux k n =
         if k > n || n < 0 then 0
         if k = 0 then 1
@@ -500,8 +494,6 @@ let pascal k n =
 
 On peut ainsi se ramener à un problème plus classique que nous savons déjà implémenter.
 
-
-
 <u>Amélioration de la version ascendante pour être en O(k)</u>
 
 On applique l'algorithme sur un tableau de taille k.
@@ -523,8 +515,6 @@ let pascal k n =
 <u>Pour le sac à dos</u>
 
 La même astuce permet d'obtenir un coût linéaire de mémoire.
-
-
 
 #### 2. Trouver et Prouver des Formules de Récurrences
 

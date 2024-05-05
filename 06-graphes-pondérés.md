@@ -58,8 +58,6 @@ def dijsktra(G, s):
 > 
 > Preuve : S'il y avait un meilleur <u>chemin</u> de s à $u_i$, alors on obtiendrait un meilleur chemin de s à t.
 
-
-
 <u>Invariant</u>
 
 * Si prio(u) différent de $+\infin$ alors $\exist c : s\rightarrow u$ de poids prio(u)
@@ -67,8 +65,6 @@ def dijsktra(G, s):
 * Si $x \notin pq$ alors pour tout voisin w de x on a prio(u) $\le$ prio(x) + pond(x, w)
 
 * Lorsque u sort de la file, prio(u) = $\delta(s,u)$
-
-
 
 <u>Préservation de l'invariant</u>
 
@@ -103,8 +99,6 @@ Donc $\delta(s,u) \le \delta(s,u)-pond(c_2)$
 Donc $pond(c_2) = 0$
 
 L'invariant est vérifié.
-
-
 
 #### Complexité
 
@@ -196,5 +190,3 @@ $pm_{ij}^k = min(pm_{ij}^k, pm_{i,k-1}^{k-1}+pm_{k-1,j}^{k-1})$
 <u>Gain en espace</u> : `T.(i).(j)` : table 2D.
 
 Invariant : $T.(i).(j) = pm_{ij}^{k-1}$
-
-
