@@ -240,7 +240,7 @@ Pour minimiser la consommation mémoire, on peut ne considérer que les codages 
 Conclusion : Un codage optimal correspond forcément à une arbre binaire strict. On prendra dans la suite 
 
 ```ocaml
-type codage = Loaf of Sigma | Node of codage * codage
+type codage = Leaf of Sigma | Node of codage * codage
 ```
 
 #### b. Recherche du codage Optimal
