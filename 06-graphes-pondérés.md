@@ -158,7 +158,7 @@ On définit $pm_{ij}^k$ le poids minimal d'un chemin de i à j dont les sommets 
 
 $pm_{ij}^0 = A_{ij}$
 
-$pm_{ij}^k = min(pm_{ij}^k, pm_{i,k-1}^{k-1}+pm_{k-1,j}^{k-1})$
+$pm_{ij}^k = min(pm_{ij}^(k-1), pm_{i,k-1}^{k-1}+pm_{k-1,j}^{k-1})$
 
 <u>Complexité</u> : $O(n^3)$
 
