@@ -75,27 +75,27 @@ On considère c un chemin optimal de s à u.
 
 - Sur ce chemin on note x le prédécesseur de w (existe car s $in.not$ pq donc s différent de w)
 
-$delta lr((s , w)) lt.eq p r i o lr((w))$ par invariant
+$delta lr((s , w)) lt.eq "prio" lr((w))$ par invariant
 
 $x in.not p q$ puisque w est le premier du chemin à être dans pq.
 
-Donc par le 2ème invariant : $p r i o lr((w)) lt.eq p r i o lr((x)) + p o n d lr((x , w))$ où $p r i o lr((x)) = delta lr((s , w))$.
+Donc par le 2ème invariant : $"prio" lr((w)) lt.eq "prio" lr((x)) + "pond" lr((x , w))$ où $"prio" lr((x)) = delta lr((s , w))$.
 
 Par le lemme, le préfixe du chemin c de s à w est optimal, donc de poids $delta lr((s , w))$
 
-De même pour x, donc $delta lr((s , w)) = delta lr((s , x)) + p o n d lr((w , x))$
+De même pour x, donc $delta lr((s , w)) = delta lr((s , x)) + "pond" lr((w , x))$
 
 #strong[On met tout ensemble :]
 
-$delta lr((s , w)) lt.eq p r i o lr((w)) lt.eq delta lr((s , w)) + p o n d lr((w , x))$ et $p r i o lr((w)) = delta lr((s , w))$
+$delta lr((s , w)) lt.eq "prio" lr((w)) lt.eq delta lr((s , w)) + "pond" lr((w , x))$ et $"prio" lr((w)) = delta lr((s , w))$
 
-Et comme \$u \= extract\\\_min \\space pq\$.
+Et comme $u =$ extract_min(pq).
 
-On a $p r i o lr((u)) lt.eq p r i o lr((w)) = delta lr((s , w)) = delta lr((s , u)) - p o n d lr((c_2))$
+On a $"prio" u <= "prio"(w) = delta lr((s , w)) = delta lr((s , u)) - "pond" lr((c_2))$
 
-Donc $delta lr((s , u)) lt.eq delta lr((s , u)) - p o n d lr((c_2))$
+Donc $delta lr((s , u)) lt.eq delta lr((s , u)) - "pond" lr((c_2))$
 
-Donc $p o n d lr((c_2)) = 0$
+Donc $"pond" lr((c_2)) = 0$
 
 L’invariant est vérifié.
 
@@ -110,13 +110,13 @@ Pour chaque voisin : $O lr((l o g lr((n))))$ à cause de la mise à jour de prio
 
 #strong[Finalement :]
 
-$O lr((n)) + sum_(u in V) ( O lr((l o g lr((n)) + sum_(v v o i s i n) O lr((l o g lr((n))))))$
+$
+O(n) + sum_(u in V)O(log(n) + sum_(v in "voisins")O(log(n))) &= O(log(n)) + sum_(u in V)O(log(n))d_+(u) \
 
-$= O lr((l o g lr((n)))) + sum_(u in V) O lr((l o g lr((n)))) d_(+) lr((u))$
+&= O(n log(n)) + O(m log(n)) \
 
-$= O lr((n l o g lr((n)))) + O lr((m l o g lr((n))))$
-
-$= O lr((l o g lr((n)) lr((n + m))))$
+&= O(log(n)(n+m))
+$
 
 ==== Conclusion <conclusion>
 - L’algorithme donne pour un sommet s : les poids minimaux et plus courts chemins de s à tous les $t in V$.
@@ -130,9 +130,9 @@ $= O lr((l o g lr((n)) lr((n + m))))$
 ==== Première idée - Adaptation du produit matriciel <première-idée---adaptation-du-produit-matriciel>
 Essayons d’adapter la méthode des puissances matricielles. On note A la matrice d’adjacence du graphe et suppose :
 
-\$A\_{ij} \= +\\infin\$ si $lr((i , j)) in.not E$
+$A_(i j) = + infinity "si" lr((i , j)) in.not E$
 
-$A_(i j) = p o n d lr((i , j))$
+$A_(i j) = "pond"lr((i , j))$
 
 $A_(j j) = 0$
 

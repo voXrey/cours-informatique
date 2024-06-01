@@ -88,6 +88,7 @@ void shuffle(int *a, int n) {
 void bogosort(int *a, int n) {
     while (!is_sorted(a, n))
         shuffle(a, n);
+}
 ```
 
 Le `bogosort` tire aléatoirement des permutations d’une liste (ou tableau) jusqu’à l’avoir trié.
@@ -95,7 +96,7 @@ Le `bogosort` tire aléatoirement des permutations d’une liste (ou tableau) ju
 #quote(
   block: true,
 )[
-  Remarque : On parle ici de #strong[correction partielle]. Cela consiste à démontrer que le programme est correct en supposant qu’il termine (même si cette supposition est fausse.
+  Remarque : On parle ici de #strong[correction partielle]. Cela consiste à démontrer que le programme est correct en supposant qu’il termine (même si cette supposition est fausse).
 ]
 
 On dit qu’un programme est #strong[correct] lorsque l’on a #strong[correction partielle] + #strong[terminaison].
@@ -116,7 +117,7 @@ Spécification de `max_arr` :
 
 - Précondition : `len > 0` (le tableau a est non vide)
 
-- Postcondition : Renvoie la valeur maximale de a, c’est-à-dire $m a x_(i in \[ 0 , l e n \[) a lr([i])$.
+- Postcondition : Renvoie la valeur maximale de a, c’est-à-dire $"max"_(i in \[0, "len"\[) a[i]$.
 
 Pour cela on utilise la notion #strong[d’invariant de boucle].
 
@@ -134,7 +135,7 @@ Cette propriété sera donc vraie à la fin de l’exécution de la boucle.
 
 Sur l’exemple de `max_arr` : prenons comme invariant :
 
-$ m = m a x_(j in \[ 0 , i \[) a lr([j]) $
+$ m = max_(j in \[0, i\[) a[i] $
 
 Vérifions que c’est un bon invariant.
 
