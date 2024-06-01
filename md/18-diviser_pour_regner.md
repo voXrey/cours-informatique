@@ -37,7 +37,7 @@ Pour résoudre un problème P sur une instance $I$ :
 ```ocaml
 let rec divide = function
     | [] -> [],[]
-    | [e] -> [e,[]
+    | [e] -> [e],[]
     | a::b::l ->
     let (l1,l2) = divide l in
     (a::l1, b::l2);;
