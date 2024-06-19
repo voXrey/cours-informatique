@@ -1,3 +1,7 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
 #set text(font: "Roboto Serif")
 
 = Graphes Pondérés <graphes-pondérés>
@@ -30,7 +34,7 @@ def whatever_first_search(G, s):
                 add v bag
 ```
 
-==== Description de l’algorithme <description-de-lalgorithme>
+==== Description de l'algorithme <description-de-lalgorithme>
 ```python
 def dijsktra(G, s):
     n = len(G)
@@ -48,24 +52,24 @@ def dijsktra(G, s):
     renvoyer le tableau des distances
 ```
 
-==== Correction de l’algorithme <correction-de-lalgorithme>
+==== Correction de l'algorithme <correction-de-lalgorithme>
 #quote(
   block: true,
 )[
-  Lemme : Soit s et t deux sommets d’un graphe orienté et pondéré G. Soit c un chemin $s = u_0 , u_1 , . . . , u_k = t$ de poids minimal de s à t. Alors quelque soit i, le chemin $s = u_0 , . . . , u_i$ est de poids minimal de s à $u_i$.
+  Lemme : Soit s et t deux sommets d'un graphe orienté et pondéré G. Soit c un chemin $s = u_0 , u_1 , dots , u_k = t$ de poids minimal de s à t. Alors quelque soit i, le chemin $s = u_0 , dots , u_i$ est de poids minimal de s à $u_i$.
 
-  Preuve : S’il y avait un meilleur chemin de s à $u_i$, alors on obtiendrait un meilleur chemin de s à t.
+  Preuve : S'il y avait un meilleur chemin de s à $u_i$, alors on obtiendrait un meilleur chemin de s à t.
 ]
 
 Invariant
 
-- Si prio\(u) différent de \$+\\infin\$ alors \$\\exist c : s\\rightarrow u\$ de poids prio\(u)
+- Si prio(u) différent de $+infinity$ alors $exists c : -> u$ de poids prio\(u)
 
 - Si $x in.not p q$ alors pour tout voisin w de x on a prio\(u) $lt.eq$ prio\(x) + pond\(x, w)
 
 - Lorsque u sort de la file, prio\(u) \= $delta lr((s , u))$
 
-Préservation de l’invariant
+Préservation de l'invariant
 
 On suppose u différent de s
 
@@ -97,7 +101,7 @@ Donc $delta lr((s , u)) lt.eq delta lr((s , u)) - "pond" lr((c_2))$
 
 Donc $"pond" lr((c_2)) = 0$
 
-L’invariant est vérifié.
+L'invariant est vérifié.
 
 ==== Complexité <complexité>
 Avant la boucle : $O lr((n))$ pour initialiser la file de priorité
@@ -119,16 +123,16 @@ O(n) + sum_(u in V)O(log(n) + sum_(v in "voisins")O(log(n))) &= O(log(n)) + sum_
 $
 
 ==== Conclusion <conclusion>
-- L’algorithme donne pour un sommet s : les poids minimaux et plus courts chemins de s à tous les $t in V$.
+- L'algorithme donne pour un sommet s : les poids minimaux et plus courts chemins de s à tous les $t in V$.
 
 === 2. Algorithme de Floyd Warshall <algorithme-de-floyd-warshall>
 ==== Introduction <introduction>
-- On travaille avec la matrice d’adjacence
+- On travaille avec la matrice d'adjacence
 
 - On va déterminer tous les plus courts chemins de s à t $forall lr((s , t))$.
 
 ==== Première idée - Adaptation du produit matriciel <première-idée---adaptation-du-produit-matriciel>
-Essayons d’adapter la méthode des puissances matricielles. On note A la matrice d’adjacence du graphe et suppose :
+Essayons d'adapter la méthode des puissances matricielles. On note A la matrice d'adjacence du graphe et suppose :
 
 $A_(i j) = + infinity "si" lr((i , j)) in.not E$
 
@@ -136,7 +140,7 @@ $A_(i j) = "pond"lr((i , j))$
 
 $A_(j j) = 0$
 
-On aimerait que $A_(i j)^k$ donne le poids minimal d’un chemin de longueur au plus k de i à j.
+On aimerait que $A_(i j)^k$ donne le poids minimal d'un chemin de longueur au plus k de i à j.
 
 $A_(i j)^k = min_(l = 0)^(n - 1) lr((A_(i l)^(k - 1) + A_(l j)))$
 
@@ -144,10 +148,10 @@ Complexité
 
 En supposant la multiplication matricielle modifiée en $O lr((n ³))$ le calcul de $A^n$ est en $O lr((n ³ l o g lr((n))))$.
 
-==== Description de l’algorithme <description-de-lalgorithme-1>
+==== Description de l'algorithme <description-de-lalgorithme-1>
 De manière similaire, on fractionne le problème "aller de i à j en un chemin de poids minimal" en des sous-problèmes "aller de i à j #strong[en utilisant uniquement les sommets \[0, k-1\]] et de poids minimal".
 
-On définit $p m_(i j)^k$ le poids minimal d’un chemin de i à j dont les sommets intermédiaires sont dans $lr([0 , k - 1])$.
+On définit $p m_(i j)^k$ le poids minimal d'un chemin de i à j dont les sommets intermédiaires sont dans $lr([0 , k - 1])$.
 
 $p m_(i j)^0 = A_(i j)$
 
@@ -161,7 +165,7 @@ Pseudo-code : On applique la recette du cours de programmation dynamique
 
 - Création du tableau
 
-  - C’est un `int array array`
+  - C'est un `int array array`
 
   - Convention : $T . lr((i)) . lr((j)) . lr((k)) = p m_(i j)^k$
 
@@ -173,7 +177,7 @@ Pseudo-code : On applique la recette du cours de programmation dynamique
              T.(i).(j).(0) <- ...
     ```
 
-- Remplissage : ne pas se tromper dans l’ordre des boucles
+- Remplissage : ne pas se tromper dans l'ordre des boucles
 
   ```ocaml
       for k = 1 to ...

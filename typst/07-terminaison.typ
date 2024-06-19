@@ -1,3 +1,7 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
 #set text(font:"Roboto Serif")
 
 = Terminaison de Programme <terminaison-de-programme>
@@ -28,7 +32,7 @@ Dans cet exemple on voit bien que la fonction `f` ne termine pas toujours alors 
 #quote(
   block: true,
 )[
-  Énoncé : \$\\forall n\\in\\N\$ g\(n) termine.
+  Énoncé : $forall n in NN "g(n) termine"$.
 
   Initialisation : Le programme termine directement (c’est le cas de base).
 
@@ -70,7 +74,7 @@ return 1 + syracuse(3*n + 1);
 On est bloqué puisque 3n+1 \< n.~Il s’agit encore à ce jour d’un problème ouvert, on ne sait pas si ce programme termine.
 
 ==== Triangle de Pascal <triangle-de-pascal>
-Pré-condition : \$n\\in\\N\$ et $k in bracket.l.double 0 , n bracket.r.double$
+Pré-condition : $n in NN$ et $k in bracket.l.double 0 , n bracket.r.double$
 
 ```c
 /// Triangle de Pascal
@@ -99,7 +103,7 @@ Les questions de terminaisons ne se poseront que pour les boucles en impératif.
 
 C’est une quantité mathématique définie en utilisant les variables du programme.
 
-- Cette quantité est à valeurs dans \$\\N\$
+- Cette quantité est à valeurs dans $NN$
 
 - Cette quantité décroît strictement dans lors d’une exécution de boucle.
 
@@ -124,29 +128,21 @@ int mem(int len, int* a, int elt) {
 #quote(
   block: true,
 )[
-Variant de boucle choisi : `j-i`.
-
-Début de boucle : on a les variables i et j.
-
-Après un tour de boucle i et j valent i’ et j’.
-
-Si a\[mid\] \= elt : le programme termine.
-
-SI a\[mid\] \> elt : $i prime = i$ et $j prime = ⌊ lr((i + j)) \/ 2 ⌋$
-
-- Si $i + j$ est pair alors $j prime - i prime = lr((i + j)) \/ 2 - i = lr((j - i)) \/ 2 < j - i$ car $j - i > 0$
-
-- si $i + j$ est impair alors $j prime - i prime = lr((i + j - 1)) \/ 2 - i = lr((j - i - 1)) \/ 2 < j - i$
-
-Si a\[mid\] \< elt alors les calculs sont analogues.
-
-Donc $j - i$ décroît strictement dans \$\\N\$, elle atteindra donc 0 ce qui provoquera l’arrêt de la boucle.
+Variant de boucle choisi : `j-i`.\
+Début de boucle : on a les variables i et j.\
+Après un tour de boucle i et j valent i’ et j’.\
+Si $a"[mid]" = "elt"$ : le programme termine.\
+SI $a"[mid]" > "elt"$ : $i' = i$ et $j' = ⌊(i + j)/2⌋$\
+- Si $i + j$ est pair alors $j prime - i prime = lr((i + j)) \/ 2 - i = lr((j - i)) \/ 2 < j - i$ car $j - i > 0$\
+- si $i + j$ est impair alors $j' - i' = (i + j - 1)/2 - i = (j - i - 1)/2 < j - i$\
+Si $a"[mid]" < "elt"$ alors les calculs sont analogues.\
+Donc $j - i$ décroît strictement dans $NN$, elle atteindra donc 0 ce qui provoquera l’arrêt de la boucle.
 ]
 
 ==== Cas des boucles for <cas-des-boucles-for>
 Une boucle for peut toujours se traduire par une boucle while.
 
-Pour `for(int i = a; i < b; i++)` on a toujours `b-i-a` comme variant. En principe elle termine toujours (sauf si mal écrite) mais par précaution on donnera le variant.
+Pour ```c for(int i = a; i < b; i++)``` on a toujours `b-i-a` comme variant. En principe elle termine toujours (sauf si mal écrite) mais par précaution on donnera le variant.
 
 Exemple de traduction d’une boucle for en boucle while :
 

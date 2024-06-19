@@ -1,3 +1,8 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
+#import "@preview/diagraph:0.2.4": *
 #set text(font: "Roboto Serif")
 
 = Partie III - Structure de Données <partie-iii---structure-de-données>
@@ -21,18 +26,33 @@ Définition : Un tas binaire est un arbre binaire presque complet ayant la propr
 
 Voyons un exemple.
 
-```mermaid
-graph TB;
-    A((13))-->B((8))
-    A-->C((12));
-    B-->E((4))
-    B-->F((2))
-    C-->H((3))
-    C-->I((7))
-    E-->J((2))
-    E-->K((3))
-    F-->L((1))
-```
+#raw-render(
+  ```dot
+  digraph {
+    A -> B
+    A -> C
+    B -> D
+    B -> G
+    C -> E
+    C -> F
+    D -> J
+    D -> H
+    G -> I
+  }
+  ```,
+  labels: (
+    A: "13",
+    B: "8",
+    C: "12",
+    D: "4",
+    E: "3",
+    F: "7",
+    G: "2",
+    H: "3",
+    I: "1",
+    J: "2"
+  )
+)
 
 Important : Dans le dernier étage "il n’y a pas de trou", si un nœud de l’étage h-1 n’a pas deux enfants, alors tous les nœuds à sa droite n’ont pas d’enfant.
 

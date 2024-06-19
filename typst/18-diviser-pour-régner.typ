@@ -1,3 +1,9 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
+#set text(font: "Roboto Serif")
+
 = Diviser Pour Régner <diviser-pour-régner>
 == Introduction aux algorithmes <introduction-aux-algorithmes>
 Ce sont des techniques classiques pour résoudre un problème donné.

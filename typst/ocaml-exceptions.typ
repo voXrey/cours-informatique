@@ -1,3 +1,7 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
 #set text(font: "Roboto Serif")
 
 = Exceptions OCaml <exceptions-ocaml>

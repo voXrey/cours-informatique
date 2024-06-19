@@ -1,3 +1,7 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
 #set text(font: "Roboto Serif")
 
 = Partie 6 : Algorithmique des Graphes <partie-6-algorithmique-des-graphes>
@@ -17,10 +21,6 @@ E = {
     (6,1)
 }
 ```
-
-#image(
-  "/home/arthur/.config/marktext/images/2024-03-28-10-58-15-graph(1).png",
-)
 
 ==== 4. Représentation <représentation>
 Matrice d’adjacence
@@ -110,7 +110,7 @@ Liste d’adjacence
 [
     [4], # Voisins de 0
     [2,3,4,6], # Voisins de 1
-    [0,3], # ...
+    [0,3], # dots
     [],
     [6],
     [2,3],
@@ -139,7 +139,7 @@ Si $V eq.not lr([0 , n - 1])$
 
 $g lr([i]) arrow.r$ liste des voisins de i
 
-\$g\[\"Paris\"\] \= \[\"Lille\", \"Nantes\",...\]\$
+$g\["Paris"\] \= \["Lille", "Nantes", dots\]$
 
 = Caractérisation des parcours <caractérisation-des-parcours>
 ==== Largeur <largeur>
@@ -180,7 +180,7 @@ En impératif
 Le début est celui du parcours en largeur (voir la suite) puis on remplace les files par des piles.
 
 ```python
-    ...
+    dots
     visited = [False]*n
     # on supprime cette ligne
     # visited[u0] = True

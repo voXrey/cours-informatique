@@ -1,3 +1,7 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+#codly()
+
 #set text(font: "Roboto Serif")
 
 = Gloutons <gloutons>
@@ -41,7 +45,7 @@ Soit $i_0$ le plus petit coefficient sur lequel les deux solutions diffèrent :
 
 - Ce sont les seuls cas possibles sinon la solution $lr((alpha_0 , . . . alpha_(n - 1)))$ ne respecte pas la contrainte du poids.
 
-\$\\rarr \\exist K \>r : \\alpha\_K \> 0\$ ou $alpha_r > alpha$
+$-> exists K >r : alpha_K > 0$ ou $alpha_r > alpha$
 
 Différents cas possibles :
 
@@ -84,7 +88,7 @@ La solution optimale fractionnaire est de la forme $lr((1 , . . . 1 , alpha , 0 
 
 Une approximation acceptable du problème initiale est : la meilleure solution entre $lr((1 , . . . 1 , 0 , . . .0))$ le premier 0 étant à l’indice r et $lr((0 , . . . 0 , 1 , 0 , . . .0))$ le 1 étant à l’indice r.
 
-\$\\rarr\$ On suppose qu’on a retiré les objets trop gros !
+$->$ On suppose qu’on a retiré les objets trop gros !
 
 Toute solution au problème "normal" est également une solution au problème fractionnaire.
 

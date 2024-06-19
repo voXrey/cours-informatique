@@ -1,3 +1,6 @@
+#import "@preview/codly:0.2.1": *
+#show: codly-init.with()
+
 #set text(font: "Roboto Serif")
 
 = Programmation Dynamique <programmation-dynamique>
@@ -5,6 +8,7 @@
 ==== 1. Exemple du problème du Sac à dos <exemple-du-problème-du-sac-à-dos>
 Écrivons un algorithme qui résout le problème par backtracking
 
+#codly()
 ```ocaml
 (* obj : (int*int) array : tablau de poids/valeur *)
 let knapsack obj poids_max =
@@ -17,18 +21,19 @@ let knapsack obj poids_max =
             if fst obj.(i-1) > p then aux (i-1) p
             else
                 max (aux (i-1) p)
-                    (snd obj.(i-1) + aux (i-1) (p-(fst obj.(i-1))))
+                    (snd obj.(i-1) + aux (i-1) (p-(fst obj.(i-1))))
         end
     in
     aux (Array.length obj) poids_max;;
 ```
 
-$arrow.r.double$ On fait apparaître la notion de sous-problèmes. La valeur renvoyée par `aux i p` est la valeur optimale du sac avec les objets $o b j lr([0 : i])$ et le poids max p.
+$==>$ On fait apparaître la notion de sous-problèmes. La valeur renvoyée par `aux i p` est la valeur optimale du sac avec les objets $o b j lr([0 : i])$ et le poids max p.
 
-Prenons un exemple : $o b j = lr([lr(|lr((1 , 3)) ; lr((3 , 10)) ; lr((5 , 7)) ; lr((8 , 12))|)])$ et $p o i d s_(m a x) = 10$
+Prenons un exemple : $"obj" = [|(1 , 3); (3, 10); (5, 7); (8, 12)|]$ et $"poids_max(max)" = 10$
 
-On dessine l’arbre des appels récursifs à la fonction aux.
+On dessine l'arbre des appels récursifs à la fonction aux.
 
+#codly(enable-numbers: false)
 ```toml
 aux 4 10
 ├── oui
@@ -50,17 +55,18 @@ aux 4 10
                 └── ...
 ```
 
-$arrow.r.double$ Le calcul `aux 1 2` va être effectué 2 fois !
+$==>$ Le calcul `aux 1 2` va être effectué 2 fois !
 
 ==== 2. Mémoïsation <mémoïsation>
-La mémoïsation est une "technique" en informatique qui consiste à mémoriser (stocker en mémoire) des résultats de "calculs" qui risquent d’être réutilisés plus tard.
+La mémoïsation est une "technique" en informatique qui consiste à mémoriser (stocker en mémoire) des résultats de "calculs" qui risquent d'être réutilisés plus tard.
 
 De manière générale, on peut mémoïser une fonction $f : prime a arrow.r prime b$
 
-$arrow.r.double$ On utilise un dictionnaire dont les clés sont les arguments de f (de type ’a) et les valeurs associées sont les images de f : ${ x : f lr((x)) , . . . }$
+$arrow.r.double$ On utilise un dictionnaire dont les clés sont les arguments de f (de type 'a) et les valeurs associées sont les images de f : ${ x : f lr((x)) , . . . }$
 
 Appliquons cette idée :
 
+#codly(enable-numbers: true)
 ```ocaml
 let knapsack obj poids_max =
     (* Création de la table *)
@@ -121,27 +127,23 @@ let memo_rec yf =
 let fib = memo_rec (fun fib n -> if n<2 then n else fib (n-1)+fib (n-2));;
 ```
 
-== II - Principe de la programmation Dynamique <ii---principe-de-la-programmation-dynamique>
-C’est un concept aux contours assez flous. A notre niveau, les exercices liés à la programmation dynamique auront (presque) toujours la forme suivante :
+== II - Principe de la programmation Dynamique
+C'est un concept aux contours assez flous. A notre niveau, les exercices liés à la programmation dynamique auront (presque) toujours la forme suivante :
 
-#block[
-  #set enum(numbering: "1)", start: 1)
-  + Établir une équation de récurrence qui décrit le problème concret : $u_n = u_(n . . . , p . . .) + m a x { u_(n . . . , p . . .) }$
+1. Établir une équation de récurrence qui décrit le problème concret : $u_n = u_(n . . . , p . . .) + m a x { u_(n . . . , p . . .) }$
+2. Écrire un programme qui calcule $u_(n , p)$ (sans refaire 2 fois le même calcul).
 
-  + Écrire un programme qui calcule $u_(n , p)$ (sans refaire 2 fois le même calcul).
-]
+Reprise de l'exemple du sac à dos :
 
-Reprise de l’exemple du sac à dos :
+$arrow.r.double.long$ On pose $v_(i , p)$ la valeur optimale du sac à dos pour le sous-problème $o b j lr([0 : i])$ aux poids maximal p.~
 
-$arrow.r.double$ On pose $v_(i , p)$ la valeur optimale du sac à dos pour le sous-problème $o b j lr([0 : i])$ aux poids maximal p.~
+$forall i in [0,n], v_(i,0) = 0, forall p in [0, "poids"_("max")] , v_(0, p) = 0$
 
-$forall i in lr([0 , n]) , v_(i , 0) = 0$ $forall p in lr([0 , p o i d s_(m a x)]) , v_(0 , p) = 0$
+$v_(i,p) = v_(i-1,p) "si fst obj".(i-1) > p $
 
-\$v\_{i,p} \= v\_{i-1,p} si \\space fst \\space obj.\(i-1)\>p\$
+$v_(i,p) = max(v_(i-1,p), "snd obj".(i-1)+v_(i-1)+v_(i-1),p-"fst obj".(i-1)) "sinon"$
 
-\$v\_{i,p}\=max\(v\_{i-1,p},snd\\space obj.\(i-1)+v\_{i-1}+v\_{i-1},p-fst\\space obj.\(i-1))\\space sinon\$
-
-Les suites récurrentes qui décrivent le problème correspondent souvent à découper le problème en sous-problèmes. Pour expliquer que certains sous-problèmes seront considérés plusieurs fois dans l’arbre des appels récursifs on dit que les sous-problèmes se chevauchent.
+Les suites récurrentes qui décrivent le problème correspondent souvent à découper le problème en sous-problèmes. Pour expliquer que certains sous-problèmes seront considérés plusieurs fois dans l'arbre des appels récursifs on dit que les sous-problèmes se chevauchent.
 
 == III - Première étape, un exemple <iii---première-étape-un-exemple>
 Vous êtes consultant pour une entreprise qui vend des barres de fer. Une étude de marché vient fixer des prix pour chaque longueur de barre de fer :
@@ -172,57 +174,57 @@ Vous êtes consultant pour une entreprise qui vend des barres de fer. Une étude
     )],
 )
 
-Pour accéder au prix de la barre de longueur K on écrit $P r i c e s lr([K])$.
+Pour accéder au prix de la barre de longueur K on écrit $"prices"[K]$.
 
 #quote(
   block: true,
 )[
-  Problème : l’usine livre une barre de taille N. Quel est le découpage optimal de la barre, c’est-à-dire celui qui maximise le prix de vente.
+  Problème : l'usine livre une barre de taille N. Quel est le découpage optimal de la barre, c'est-à-dire celui qui maximise le prix de vente.
 ]
 
-On note pour $K in lr([0 , N]) , p_K$ le prix de vente optimal d’une barre de longueur K.
+On note pour $K in [0 , N] , p_K$ le prix de vente optimal d'une barre de longueur K.
 
 ~Établir une équation de récurrence sur $p_K$ :
 
 - $p_0 = 0$
 
-- Pour $K > 0 , p_K = m a x_(l in lr([1 , K])) lr((P r i c e s lr([l]) + p_(K - l)))$
+- Pour $K > 0 , p_K = max_(l in [1 , K]) ("prices"[l] + p_(K - l))$
 
 Preuve
 
-$P r i c e s lr([k])$ : prix d’une barre de longueur k
+$"prices"[k]$ : prix d'une barre de longueur k
 
 $p_0 = 0$
 
-$p_K = m a x_(l in lr([1 , K])) lr((P r i c e s lr([l]) + p_(K - l)))$
+$p_K = m a x_(l in [1 , K]) ("prices"[l] + p_(K - l))$
 
-On montre par récurrence sur K que p\_K est le prix de vente maximal d’une barre de longueur K.
+On montre par récurrence sur K que p\_K est le prix de vente maximal d'une barre de longueur K.
 
 #strong[Initialisation] : Trivial
 
-#strong[Hérédité] : Soit $K > 0$ tel que l’hypothèse de récurrence HR soit vrai pour tout i
+#strong[Hérédité] : Soit $K > 0$ tel que l'hypothèse de récurrence HR soit vrai pour tout i
 
-Soit $l in lr([1 , K])$, par HR $p_(K - l)$ est le prix de vente optimal d’une barre de longueur K-l, donc il existe un découpage $K - l = n_0 + . . . + n_P$ tel que $sum_(i = 0)^p P r i c e s lr([n_i]) = p_(K - l)$.
+Soit $l in [1 , K]$, par HR $p_(K - l)$ est le prix de vente optimal d'une barre de longueur K-l, donc il existe un découpage $K - l = n_0 + . . . + n_P$ tel que $sum_(i = 0)^p "prices"lr([n_i]) = p_(K - l)$.
 
-Alors clairement le découpage $K = l + n_0 + . . . + n_P$ réalise le prix de vente $P r i c e s lr([l]) + p_(K - l)$. Donc $p_K lt.eq p r i x_(o p t i)$ pour K.
+Alors clairement le découpage $K = l + n_0 + . . . + n_P$ réalise le prix de vente $"prices"lr([l]) + p_(K - l)$. Donc $p_K lt.eq p r i x_(o p t i)$ pour K.
 
 Réciproquement, soit $K = n_0 + . . . + n_P$ un découpage optimal pour une barre de longueur K (existe car possibilités finies).
 
-Alors le découpage $K - n_0 = n_1 + . . . n_P$ est optimal. Si ce n’était pas le cas, en prenant un meilleur découpage $K - n_0 = n_1 prime + . . . + n_P prime$ on obtient un meilleur découpage pour K.
+Alors le découpage $K - n_0 = n_1 + . . . n_P$ est optimal. Si ce n'était pas le cas, en prenant un meilleur découpage $K - n_0 = n_1 prime + . . . + n_P prime$ on obtient un meilleur découpage pour K.
 
-Donc $sum_(i = 1)^P P r i c e s lr([n_i]) = p_K - n_0$.
+Donc $sum_(i = 1)^P "prices"[n_i] = p_K - n_0$.
 
-Donc $p r i x_(o p t i) = P r i c e s lr([n_0]) + p_K - n_0 lt.eq p_K$.
+Donc $p r i x_(o p t i) = "prices"[n_0] + p_K - n_0 lt.eq p_K$.
 
-#strong[Mot-clé] : Propriété de sous-problème optimal \= une solution qui se construit en combinant des solutions optimales pour des sous-problèmes.
+#strong[Mot-clé] : Propriété de sous-problème optimal = une solution qui se construit en combinant des solutions optimales pour des sous-problèmes.
 
 == IV - Seconde étape <iv---seconde-étape>
 ==== 1. Version Descendante <version-descendante>
-Il s’agit de la version récursive, c’est la mémoïsation.
+Il s'agit de la version récursive, c'est la mémoïsation.
 
 Illustration sur la vente de barres de fer :
 
-L’équation de récurrence est donc connue.
+L'équation de récurrence est donc connue.
 
 ```ocaml
 open Hastbl;;
@@ -257,7 +259,7 @@ let rec fold_left op acc = function
   | h :: t -> fold_left op (op acc h) t
 ```
 
-La fonction `fold_left` permet d’abréger toute fonction de cette forme :
+La fonction `fold_left` permet d'abréger toute fonction de cette forme :
 
 ```ocaml
 let s = ref e in
@@ -297,12 +299,12 @@ Variantes :
 
 - Possibilité de traiter tous les cas de base dans la fonction aux.
 
-==== 2. Version Ascendante \= Impérative <version-ascendante-impérative>
+==== 2. Version Ascendante = Impérative <version-ascendante-impérative>
 Au lieu de vérifier si un calcul a déjà été mené (/sous-problème déjà résolu), on remplit toute la table dans le bon ordre systématiquement.
 
-Le bon ordre est celui qui assure que pour remplir la case courante, on a déjà remplit les cases utilisées dans l’équation de récurrence.
+Le bon ordre est celui qui assure que pour remplir la case courante, on a déjà remplit les cases utilisées dans l'équation de récurrence.
 
-On reprend l’exemple des barres de fer une fois de plus :
+On reprend l'exemple des barres de fer une fois de plus :
 
 ```ocaml
 let barre_de_fer prices n =
@@ -319,9 +321,8 @@ let barre_de_fer prices n =
 ```
 
 #quote(block: true)[
-  desc : \$p\_k \\rarr aux \\space k\$
-
-  asc : \$p\_k \\rarr t.\(k)\$
+  desc : $p_k -> "aux" k$\
+  asc : $p_k ->  t.(k)$
 ]
 
 Squelette Générique
@@ -348,7 +349,7 @@ Difficultés :
 
 - Les cas de base : ne pas en oublier
 
-- Trouver le bon ordre : $t . lr((k)) . lr((l))$ doit avoir déjà été remplit lorsqu’il est utilisé.
+- Trouver le bon ordre : $t . lr((k)) . lr((l))$ doit avoir déjà été remplit lorsqu'il est utilisé.
 
 Version ascendante
 
@@ -410,7 +411,7 @@ def fibo(n):
     return T[n]
 ```
 
-On remarque qu’on aurait pu utiliser 2 variables au lieu de toute une liste.
+On remarque qu'on aurait pu utiliser 2 variables au lieu de toute une liste.
 
 ```python
 def fibo(n):
@@ -423,9 +424,9 @@ def fibo(n):
     return u
 ```
 
-On a ainsi l’invariant suivant : $u = f i b o lr((i - 1))$ et $u p r e c = f i b o lr((i - 2))$.
+On a ainsi l'invariant suivant : $u = f i b o lr((i - 1))$ et $u p r e c = f i b o lr((i - 2))$.
 
-On a ainsi un coût d’espace constant bien que l’on reste on coût temporel linéaire.
+On a ainsi un coût d'espace constant bien que l'on reste on coût temporel linéaire.
 
 $arrow.r.double$ La version ascendante peut permettre de gagner en espace.
 
@@ -524,19 +525,19 @@ Version descendante : Potentiellement beaucoup moins
 
 $arrow.r.double$ gain en temps (difficile à mesurer dans le pire des cas)
 
-$arrow.r.double$ gain en espace ?? \$\\rarr\$ Cela dépend de l’implémentation des dictionnaires, ce n’est pas si évident.
+$arrow.r.double$ gain en espace ?? $->$ Cela dépend de l'implémentation des dictionnaires, ce n'est pas si évident.
 
 == VI - Reconstruction de la Solution <vi---reconstruction-de-la-solution>
-Les programmes écrits pour le problème du sac à dos donnent la valeur optimale du sac à dos mais pas comment l’atteindre.
+Les programmes écrits pour le problème du sac à dos donnent la valeur optimale du sac à dos mais pas comment l'atteindre.
 
-L’arbre de décision se lit dans la table obtenue à la fin de l’algorithme.
+L'arbre de décision se lit dans la table obtenue à la fin de l'algorithme.
 
-Pour reconstruire la solution on conserve la table et on la parcourt "à l’envers".
+Pour reconstruire la solution on conserve la table et on la parcourt "à l'envers".
 
 #quote(
   block: true,
 )[
-  Ici le "18" de la case $t . lr((10)) . lr((4))$ a été obtenu comme $m a x lr((t . lr((10)) . lr((3)) , t . lr((2)) . lr((3)) + 12))$. Comme c’est $t . lr((10)) . lr((3))$ qui donne sa valeur au max, l’objet 4 n’est pas choisi dans la solution.
+  Ici le "18" de la case $t . lr((10)) . lr((4))$ a été obtenu comme $m a x lr((t . lr((10)) . lr((3)) , t . lr((2)) . lr((3)) + 12))$. Comme c'est $t . lr((10)) . lr((3))$ qui donne sa valeur au max, l'objet 4 n'est pas choisi dans la solution.
 
   Puis on continue.
 ]
@@ -584,7 +585,7 @@ On peut ainsi se ramener à un problème plus classique que nous savons déjà i
 
 Amélioration de la version ascendante pour être en O\(k)
 
-On applique l’algorithme sur un tableau de taille k.
+On applique l'algorithme sur un tableau de taille k.
 
 ```ocaml
 let pascal k n =
@@ -602,13 +603,13 @@ let pascal k n =
 
 Pour le sac à dos
 
-La même astuce permet d’obtenir un coût linéaire de mémoire.
+La même astuce permet d'obtenir un coût linéaire de mémoire.
 
 ==== 2. Trouver et Prouver des Formules de Récurrences <trouver-et-prouver-des-formules-de-récurrences>
 ===== 2.1 Vente de Barres de Fer <vente-de-barres-de-fer>
 Preuve dans la partie #strong[III] de cours.
 
-===== 2.2 Distance d’édition : Levenshtein <distance-dédition-levenshtein>
+===== 2.2 Distance d'édition : Levenshtein <distance-dédition-levenshtein>
 Formule de récurrence
 
 $d_(i , 0) = i$
@@ -619,7 +620,7 @@ $d_(i , j) = d_(i - 1 , j - 1)$ si $t 1 lr([i - 1]) = t 2 lr([j - 1])$
 
 $d_(i , j) = m i n lr((d_(i - 1 , j) + 1 , 1 + d_(i , j - 1))) = 1 + m i n lr((d_(i - 1 , j) , d_(i , j - 1)))$ sinon
 
-Le minimum fait intervenir d’un côté la suppression du caractère suivi de l’application de l’algorithme avec le reste du mot. De l’autre côté il fait intervenir l’ajout du caractère avant de continuer.
+Le minimum fait intervenir d'un côté la suppression du caractère suivi de l'application de l'algorithme avec le reste du mot. De l'autre côté il fait intervenir l'ajout du caractère avant de continuer.
 
 Avec remplacement
 
